@@ -49,8 +49,8 @@ output = []
 def my_callback(buffer, word):
     buffer.append(word)
 
-CHARSET = ["a", "b", "c", "d", "i", "o", "t", "k", "j"]
-str_len = 7
+CHARSET = "01"
+str_len = 5
 generate_all_strings_min_max_len(1, str_len, CHARSET, output, my_callback)
 for i in range(len(output)):
     print("%d %s" % (i, output[i]))

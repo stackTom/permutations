@@ -85,10 +85,10 @@ void generate_all_strings_min_max_len(int min_len, int max_len, char *charset, c
     }
 }
 
-// TODO: fix CHARSET on line  45 in py version
 // TESTING ;)
+int i = 0;
 void my_callback(char *buffer, char *word) {
-    printf("%s\n", word);
+    printf("%d %s\n", i++, word);
 }
 
 int main(void) {
