@@ -92,10 +92,9 @@ void my_callback(char *buffer, char *word) {
 }
 
 int main(void) {
-    char *CHARSET = "01";
+    char *CHARSET = "0123456789";
     const size_t str_len = 5;
     char output[32];
-    //printf("%s\n", itoa_with_charset(1, CHARSET, 0));
     generate_all_strings_min_max_len(1, str_len, CHARSET, output, &my_callback);
 
     return 0;

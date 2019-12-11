@@ -15,6 +15,9 @@ permutations: $(OBJ)
 valgrind: all
 	valgrind ./permutations
 
+run: all
+	./permutations
+
 clean:
 	rm -rf *.o
 	rm -rf permutations
