@@ -49,7 +49,7 @@ output = []
 def my_callback(buffer, word):
     buffer.append(word)
 
-CHARSET = "01"
+CHARSET = "0123456789"
 str_len = 5
 generate_all_strings_min_max_len(1, str_len, CHARSET, output, my_callback)
 for i in range(len(output)):

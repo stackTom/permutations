@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS =
+CFLAGS = -g
 DEPS =
 OBJ = permutations.o
 LIBS = -lm

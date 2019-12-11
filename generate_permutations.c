@@ -13,9 +13,7 @@ char * itoa_with_charset(int integer, char *charset, int pad) {
         // case of number system with only 1 type of digit
         // each number is just the digit repeated integer times...
         growing_str = (char *) malloc((integer + 1) * sizeof(char));
-        for (int i = 0; i < integer; i++) {
-            growing_str[i] = charset[0];
-        }
+        memset(growing_str, charset[0], integer);
         growing_str[integer] = '\0';
     } else if (integer == 0) {
         growing_str = (char *) malloc(2);
@@ -45,10 +43,9 @@ char * itoa_with_charset(int integer, char *charset, int pad) {
     const int difference = pad - growing_str_len;
     if (growing_str_len < pad) {
         growing_str = realloc(growing_str, pad + 1);
-        memmove(growing_str + difference, growing_str, growing_str_len);
-    }
-    for (int i = 0; i < difference; i++) {
-        growing_str[i] = charset[0];
+        // growing_str_len +1 because memmove copies n bytes. need to copy null byte as well
+        memmove(growing_str + difference, growing_str, growing_str_len + 1);
+        memset(growing_str, charset[0], difference);
     }
 
     return growing_str;
