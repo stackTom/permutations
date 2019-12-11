@@ -39,7 +39,6 @@ char * itoa_with_charset(int integer, char *charset, int pad) {
             working_value /= BASE;
             growing_str[i] = charset[cur_digit];
         }
-
     }
 
     const size_t growing_str_len = strlen(growing_str);
@@ -64,7 +63,6 @@ size_t get_total_num_strings_from_min_to_max_len(char *charset, int min_len, int
     }
 
     return num;
-    
 }
 
 void generate_strings_of_length(int length, char *charset, char *buffer, void (*callback)(char *buffer, char *new_word)) {
