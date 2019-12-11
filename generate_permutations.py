@@ -55,4 +55,3 @@ generate_all_strings_min_max_len(1, str_len, CHARSET, output, my_callback)
 for i in range(len(output)):
     print("%d %s" % (i, output[i]))
 
-
