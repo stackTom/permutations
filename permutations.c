@@ -59,14 +59,13 @@ size_t get_total_num_strings_from_min_to_max_len(char *charset, int min_len, int
 
 void generate_strings_of_length(int length, char *charset, char *buffer, void (*callback)(char *buffer, char *new_word)) {
     const size_t num_strings = pow(strlen(charset), length);
+    char buf[32];
 
     for (int i = 0; i < num_strings; i++) {
-        char *buf = (char *) malloc(sizeof(char) * (length + 1));
         char *new_word = itoa_with_charset(i, charset, length, buf);
         if (callback) {
             (*callback)(buffer, new_word);
         }
-        free(new_word);
     }
 }
 
