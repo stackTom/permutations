@@ -3,22 +3,19 @@
 #include <string.h>
 #include <math.h>
 
-char * itoa_with_charset(int integer, char *charset, int pad) {
+char * itoa_with_charset(int integer, char *charset, int pad, char *buf) {
     int working_value = integer;
-    const size_t BASE = strlen(charset);
-
-    char *growing_str = NULL;
     const size_t str_len = strlen(charset);
+    const size_t BASE = str_len;
+
     if (BASE == 1) {
         // case of number system with only 1 type of digit
         // each number is just the digit repeated integer times...
-        growing_str = (char *) malloc((integer + 1) * sizeof(char));
-        memset(growing_str, charset[0], integer);
-        growing_str[integer] = '\0';
+        memset(buf, charset[0], integer);
+        buf[integer] = '\0';
     } else if (integer == 0) {
-        growing_str = (char *) malloc(2);
-        growing_str[0] = charset[0];
-        growing_str[1] = '\0';
+        buf[0] = charset[0];
+        buf[1] = '\0';
     } else {
         // get the size first to not have to realloc
         size_t str_size = 0;
@@ -27,28 +24,26 @@ char * itoa_with_charset(int integer, char *charset, int pad) {
             working_value /= BASE;
             str_size++;
         }
-        growing_str = (char *) malloc((str_size + 1) * sizeof(char));
         working_value = integer;
         int i = str_size;
-        growing_str[i] = '\0';
+        buf[i] = '\0';
         while (working_value > 0) {
             i--;
             int cur_digit = working_value % BASE;
             working_value /= BASE;
-            growing_str[i] = charset[cur_digit];
+            buf[i] = charset[cur_digit];
         }
     }
 
-    const size_t growing_str_len = strlen(growing_str);
-    const int difference = pad - growing_str_len;
-    if (growing_str_len < pad) {
-        growing_str = realloc(growing_str, pad + 1);
-        // growing_str_len +1 because memmove copies n bytes. need to copy null byte as well
-        memmove(growing_str + difference, growing_str, growing_str_len + 1);
-        memset(growing_str, charset[0], difference);
+    const size_t buf_len = strlen(buf);
+    const int difference = pad - buf_len;
+    if (buf_len < pad) {
+        // buf_len +1 because memmove copies n bytes. need to copy null byte as well
+        memmove(buf + difference, buf, buf_len + 1);
+        memset(buf, charset[0], difference);
     }
 
-    return growing_str;
+    return buf;
 }
 
 size_t get_total_num_strings_from_min_to_max_len(char *charset, int min_len, int max_len) {
@@ -66,7 +61,8 @@ void generate_strings_of_length(int length, char *charset, char *buffer, void (*
     const size_t num_strings = pow(strlen(charset), length);
 
     for (int i = 0; i < num_strings; i++) {
-        char *new_word = itoa_with_charset(i, charset, length);
+        char *buf = (char *) malloc(sizeof(char) * (length + 1));
+        char *new_word = itoa_with_charset(i, charset, length, buf);
         if (callback) {
             (*callback)(buffer, new_word);
         }

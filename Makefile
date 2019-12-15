@@ -6,7 +6,7 @@ LIBS = -lm
 
 all: permutations
 
-permutations.o: generate_permutations.c $(DEPS)
+permutations.o: permutations.c $(DEPS)
 	$(CC) -c -o permutations.o $< $(CFLAGS) $(LIBS)
 
 permutations: $(OBJ)
